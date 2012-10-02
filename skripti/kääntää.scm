@@ -5,6 +5,7 @@
 (use gauche.charconv)
 (use rfc.http)
 (use rfc.json)
+(use file.util)
 (use kirjasto)
 (require-extension (srfi 13))
 
@@ -25,22 +26,41 @@
                            2)
                          "iso-8859-1")
                        #[\[\],])
-                     1)) )
+                     1)))
 
-(define (google-translate args)
+(define (save-to-dict slang tlang source trans)
+  (cond
+    ((not (file-exists? (build-path (home-directory)
+                                    ".sdic" slang tlang)))
+     (make-directory* (build-path (home-directory)
+                                  ".sdic" slang))
+     (call-with-output-file
+       (build-path (home-directory)
+                   ".sdic" slang tlang)
+       (lambda (out)
+         (format out "~s\n" (list source trans)))
+       :if-exists :append))
+    (else
+      (call-with-output-file
+        (build-path (home-directory)
+                    ".sdic" slang tlang)
+        (lambda (out)
+          (format out "~s\n" (list source trans)))
+        :if-exists :append))))
+
+(define (main args)
   (let* ((source-lang (cadr args))
          (target-lang   (caddr args))
          (text      (cadddr args))
          (translated (get-google-translate source-lang target-lang text))
          )
+    (save-to-dict source-lang target-lang text translated)
     (print
       (string-append
         text
         " -> "
         (colour-string 123 translated)))))
 
-(define (sanakirja word)
-  )
 
 
 ; http://translate.google.com/translate_a/t?client=t&ie=UTF-8&text=talikko&sl=fi&tl=en
