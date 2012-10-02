@@ -62,7 +62,8 @@
     (process "sudo rm -rfv /usr/obj"))
   (process "sudo make buildworld")
   (process "sudo make buildkernel")
-  (process "sudo make installkernel"))
+  (process "sudo make installkernel")
+  (print "REBOOT!"))
 
 
 
