@@ -2,6 +2,7 @@
 
 (install
   (
+   (make-directory* (build-path *lehti-dist-directory* "kirjasto"))
    (copy-directory* (build-path *lehti-cache-directory* "kirjasto/skripti")
                     (build-path *lehti-dist-directory* "kirjasto/skripti"))
    ;; library sources
