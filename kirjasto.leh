@@ -2,9 +2,9 @@
 
 (install
   (
-   (make-directory* (build-path *lehti-dist-directory* "kirjasto"))
-   (copy-directory* (build-path *lehti-cache-directory* "kirjasto/skripti")
-                    (build-path *lehti-dist-directory* "kirjasto/skripti"))
+   (make-directory* (build-path ( *lehti-dist-directory* ) "kirjasto"))
+   (copy-directory* (build-path ( *lehti-cache-directory* ) "kirjasto/skripti")
+                    (build-path ( *lehti-dist-directory* ) "kirjasto/skripti"))
    ;; library sources
-   (copy-directory* (build-path *lehti-cache-directory* "kirjasto/src")
-                    (build-path *lehti-dist-directory* "kirjasto/src"))))
+   (copy-directory* (build-path ( *lehti-cache-directory* ) "kirjasto/src")
+                    (build-path ( *lehti-dist-directory* ) "kirjasto/src"))))
