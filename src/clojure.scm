@@ -30,17 +30,17 @@
        (else
          (print "file not exists"))))))
 
-(define (spit file string :key (append? #f))
+(define (spit file s :key (append? #f))
   (cond
     (append?
       (call-with-output-file file
         (^ (in)
-          (display string in))
+          (display s in))
         :if-exists :append))
     (else
       (call-with-output-file file
         (^ (in)
-          (display string in))))))
+          (display s in))))))
 
 (define-syntax comment
   (syntax-rules ()

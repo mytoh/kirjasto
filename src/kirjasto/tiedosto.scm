@@ -7,6 +7,7 @@
   (require-extension
     (srfi 11 13))
   (export
+    path-add-extension
     cat-file
     read-lines-list))
 (select-module kirjasto.tiedosto)
@@ -30,9 +31,16 @@
   (call-with-input-file filename
     (lambda (p)
       (let loop ((line (read-line p))
-		 (result '()))
-	(if (eof-object? line)
-	    (begin (close-input-port p)
-		   (reverse result))
-	    (loop (read-line p) (cons line result)))))))
+                 (result '()))
+        (if (eof-object? line)
+          (begin (close-input-port p)
+            (reverse result))
+          (loop (read-line p) (cons line result)))))))
 
+
+(define (path-add-extension name ext)
+  (cond
+    ((equal? (ref ext 0) #\.)
+     (path-swap-extension name (string-trim ext #\.)))
+    (else
+      (path-swap-extension name ext))))
