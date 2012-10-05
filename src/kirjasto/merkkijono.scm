@@ -5,21 +5,17 @@
   (require-extension
     (srfi 13))
   (export
-    whitespace->dash
-    whitespace->underbar
     print-strings
     concat
     port->incomplete-string
+    split-words
+    snake-case
+    dashed-words
     ))
 
 (select-module kirjasto.merkkijono)
 
 
-(define (whitespace->underbar str)
-  (regexp-replace-all #/\s+/ str "_"))
-
-(define (whitespace->dash str)
-  (regexp-replace-all #/\s+/ str "-"))
 
 (define print-strings
   (lambda (string-lst)
@@ -47,3 +43,28 @@
                (write-block u8buf strport 0 len)
                (loop (read-block! u8buf port))))))))
 
+
+(define (split-words s)
+  "function from github.com/magnars/s.el"
+  (string-split
+    (regexp-replace-all* s
+                         #/([a-z])([A-Z])/  "\\1 \\2"
+                         #/-/               " "
+                         #/_/               " ")
+    #/\s+/))
+
+(define (snake-case s)
+  "function from github.com/magnars/s.el"
+  (string-join
+    (map (lambda (word)
+           (string-downcase word))
+    (split-words s))
+    "_"))
+
+(define (dashed-words s)
+  "function from github.com/magnars/s.el"
+  (string-join
+    (map (lambda (word)
+           (string-downcase word))
+    (split-words s))
+    "-"))
