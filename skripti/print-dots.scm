@@ -4,10 +4,11 @@
 (use text.tree)
 (use srfi-1)
 (use gauche.sequence) ; map-with-index
+(use maali)
 
 
 (define dot "·")
-(define colour-dot (colour-string 196 dot))
+(define colour-dot (paint dot 196 ))
 (define dot-list  (make-list 100 dot))
 (define interval 1)
 (define (replace-list-elements lst num rep)

@@ -7,6 +7,7 @@
 (use rfc.json)
 (use file.util)
 (use kirjasto)
+(use maali)
 (require-extension (srfi 13))
 
 
@@ -59,7 +60,7 @@
       (string-append
         text
         " -> "
-        (colour-string 123 translated)))))
+        (paint translated 123 )))))
 
 
 
