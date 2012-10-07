@@ -3,18 +3,22 @@
   (export
     file-is-archive?
     )
+  (use gauche.parameter)
   (use file.util))
 (select-module kirjasto.arkisto)
 
 
+(define supporting-extensions
+  (make-parameter
+    '("tar" "xz" "gz" "bz2"
+      "cbz" "cbr" "cbx"
+      "rar"
+      "zip")))
+
 (define (file-is-archive? file)
   (let ((extension (path-extension file)))
-      (or
-         (string=? extension "xz")
-         (string=? extension "gz")
-         (string=? extension "cbz")
-         (string=? extension "cbr")
-         (string=? extension "cbx")
-         (string=? extension "rar")
-         (string=? extension "zip"))))
+    (any
+      (lambda (s)
+        (string=? extension s))
+      (supporting-extensions))))
 
