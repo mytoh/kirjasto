@@ -9,8 +9,9 @@
     concat
     port->incomplete-string
     split-words
-    snake-case
-    dashed-words
+    underscore
+    dasherize
+    pluralize
     ))
 
 (select-module kirjasto.merkkijono)
@@ -31,7 +32,7 @@
     ((_ lst)
      (string-concatenate lst))
     ((_ str ...)
-     (string-append str ...))))
+     (string-append (x->string str) ...))))
 
 (define (port->incomplete-string port)
   (let ((strport (open-output-string))
@@ -53,18 +54,28 @@
                          #/_/               " ")
     #/\s+/))
 
-(define (snake-case s)
-  "function from github.com/magnars/s.el"
+(define (underscore s)
+  "function from github.com/flatland/useful"
   (string-join
     (map (lambda (word)
            (string-downcase word))
     (split-words s))
     "_"))
 
-(define (dashed-words s)
-  "function from github.com/magnars/s.el"
+(define (dasherize s)
+  "function from github.com/flatland/useful"
   (string-join
     (map (lambda (word)
            (string-downcase word))
     (split-words s))
     "-"))
+
+(define (pluralize num singular :optional (plural #f))
+  " (plural 5 \"month\") => \"5 months\"
+    (plural 9 \"radius\" \"radii\") => \"9 radii\"
+  function from github.com/flatland/useful"
+  (concat num " "
+          (if (= 1 num)
+            singular
+            (or plural
+              (concat singular "s")))))

@@ -39,7 +39,7 @@
   (let-values (((scheme user-info hostname port-number path query fragment)
                 (uri-parse uri)))
     (let* ((file (receive (a fname ext)
-                   (decompose-path (dashed-words path))
+                   (decompose-path (dasherize path))
                    #`",|fname|.,|ext|"))
            (flusher (lambda (s h) (print file) #t)))
       (if (not (file-is-readable? file))

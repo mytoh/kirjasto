@@ -25,4 +25,4 @@
 
 
 
-(run-suites '() 'tap-colours)
+(run-suites '() 'tap-colour)
