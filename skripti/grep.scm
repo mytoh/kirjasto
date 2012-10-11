@@ -1,4 +1,4 @@
-#!/usr/bin/env gosh
+":"; exec gosh -- $0 "$@"
 
 (use file.util)
 

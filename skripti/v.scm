@@ -1,4 +1,4 @@
-#!/usr/bin/env gosh
+":"; exec gosh -- $0 "$@"
 
 ;; trying to copy github.com/rupa/v
 ;; now only accept one word

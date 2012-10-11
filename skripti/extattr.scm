@@ -1,4 +1,4 @@
-#!/usr/bin/env gosh
+":"; exec gosh -- $0 "$@"
 ; works on only freebsd
 (use gauche.process)
 (use gauche.parseopt)

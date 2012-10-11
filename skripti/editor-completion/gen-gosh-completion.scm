@@ -1,4 +1,4 @@
-#!/usr/bin/env gosh
+":"; exec gosh -- $0 "$@"
 
 ; http://d.hatena.ne.jp/rui314/20070604/p1
 ;

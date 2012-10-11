@@ -1,4 +1,4 @@
-#!/usr/bin/env gosh
+":"; exec gosh -- $0 "$@"
 
 ;; http://www.cyberciti.biz/files/scripts/freebsd-memory.pl.txt
 ;; 
