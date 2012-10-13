@@ -11,7 +11,7 @@
   (export
     screen-title
     print-repeat
-    puts-coloumns
+    puts-columns
 
     tput-cr
     tput-cursor-invisible
@@ -61,7 +61,7 @@
             r))
         0 string-list))
 
-(define (puts-coloumns items)
+(define (puts-columns items)
   (let* ((console-width (string->number  (process-output->string "tput cols " )))
          (longest (string-longest items))
          (optimal-col-width (floor->exact (/. console-width (+ longest 2))))
