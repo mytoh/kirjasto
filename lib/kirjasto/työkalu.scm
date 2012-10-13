@@ -15,7 +15,6 @@
     loop-forever
     get-os-type
     tap
-    p
     daemonize
     nothing
     blockc
@@ -48,10 +47,6 @@
 (define (tap f x)
   (f x) x)
 
-(define (p x)
-  (display x)
-  (newline)
-  x)
 
 (define (daemonize)
   ;;make daemon process, function from gauche cookbook
