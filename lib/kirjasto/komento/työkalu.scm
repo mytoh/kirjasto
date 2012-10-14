@@ -5,6 +5,7 @@
   (use file.util)
   (export
     run-command
+    run-command-null
     run-command-sudo
     mkdir
     cd)
@@ -21,6 +22,16 @@
     ((_ c1 c2 ...)
      (begin
        (run-process c1 :wait #t)
+       (run-command c2 ...)))))
+
+(define-syntax run-command-null;q
+  ; run processes
+  (syntax-rules ()
+    ((_ c1 )
+     (run-process c1 :wait #t :output :null))
+    ((_ c1 c2 ...)
+     (begin
+       (run-process c1 :wait #t :output :null)
        (run-command c2 ...)))))
 
 
