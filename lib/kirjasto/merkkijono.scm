@@ -1,9 +1,8 @@
 
 (define-module kirjasto.merkkijono
   (use text.tr)
+  (use text.unicode)
   (use gauche.uvector)
-  (require-extension
-    (srfi 13))
   (export
     print-strings
     concat
