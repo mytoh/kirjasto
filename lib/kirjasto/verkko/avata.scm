@@ -23,11 +23,11 @@
       ;; returns html body
       (cond (file (call-with-output-file
                     file
-                    (lambda (out)
+                    (lambda (in)
                       (http-get hostname (or  path "/")
                                 :proxy proxy
                                 :secure secure
-                                :sink out 
+                                :sink in
                                 :flusher (lambda _ #t)))))
         (else
           (values-ref (http-get hostname (or  path "/")
