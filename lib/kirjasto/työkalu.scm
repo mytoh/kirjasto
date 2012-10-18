@@ -19,6 +19,7 @@
     nothing
     blockc
     loopc
+    flip
     eval-string
     implications
     ))
@@ -70,6 +71,10 @@
 (define nothing
   (lambda ()
     (values)))
+
+
+(define (flip f)
+  (lambda args (apply f (reverse args))))
 
 ;; from info combinator page
 (define safe-length (every-pred list? length))

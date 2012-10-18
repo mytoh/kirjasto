@@ -1,7 +1,6 @@
 
 (define-module clojure.core
   (export
-    flip
     if-not
     condp
     comment
@@ -62,6 +61,3 @@
     ((_ test then else)
      (if (not test) then else))))
 
-
-(define (flip f)
-  (lambda args (apply f (reverse args))))
