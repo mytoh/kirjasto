@@ -11,9 +11,8 @@
   (use kirjasto.verkko.työkalu)
   (use srfi-11)
   (use util.list)
-  (use file.util)
-  )
-(select-module clojure)
+  (use file.util))
+(select-module clojure.core)
 
 
 (define-syntax slurp
