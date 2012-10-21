@@ -19,8 +19,7 @@
                            'eq?
                           '(a . 1)
                           '(b .1))
-             (expect (hash-table? h3) eq? #t))
-          )
+             (expect (hash-table? h3) eq? #t)))
 
 (describe "define-hash"
           (it "should make hash has key a"
