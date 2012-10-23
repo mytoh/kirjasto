@@ -1,0 +1,7 @@
+
+
+(files ("lib/**/*.scm"
+        "*.lehspec"
+        "readme*"
+        "test/**/*.scm"))
+
