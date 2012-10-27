@@ -1,5 +1,6 @@
 
 (spec
+  '(name "kirjasto")
   '(files ("lib/**/*.scm"
           "*.lehspec"
           "readme*"

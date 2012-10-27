@@ -20,6 +20,7 @@
     blockc
     loopc
     flip
+    flatten
     eval-string
     implications
     ))
@@ -75,6 +76,13 @@
 
 (define (flip f)
   (lambda args (apply f (reverse args))))
+
+
+(define (flatten lst)
+  (cond
+    ((null? lst) '())
+    ((list? lst) (append (flatten (car lst)) (flatten (cdr lst))))
+    (else (list lst))))
 
 ;; from info combinator page
 (define safe-length (every-pred list? length))
