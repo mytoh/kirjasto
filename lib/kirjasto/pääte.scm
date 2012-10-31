@@ -53,7 +53,6 @@
 
 
 
-
 (define (string-longest string-list)
   (fold (lambda (s r)
           (if (< r (string-length s))
