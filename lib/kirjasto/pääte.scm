@@ -6,7 +6,6 @@
   (use util.match)
   (use srfi-1)
   (use util.list)
-  (use kirjain)
 
   (export
     screen-title
