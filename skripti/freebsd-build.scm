@@ -38,6 +38,18 @@
     (string-concatenate
       '("[38;5;80m" "------------" "[0m" ))))
 
+(define (first)
+  (current-directory "/usr/src")
+  (when (file-exists? "/usr/obj")
+    (process "sudo make cleandir")
+    (process "sudo make cleandir")
+    (process "sudo rm -rfv /usr/obj"))
+  (process "sudo make -j 10 buildworld")
+  (process "sudo make -j 10 buildkernel")
+  (process "sudo make installkernel")
+  (print "REBOOT!"))
+
+
 (define (second)
   (process "mount -u /" )
   (process "mount -a -t ufs" )
@@ -53,17 +65,6 @@
     # mount -a -t ufs
     # cd /usr/src
     # make delete-old-libs "))
-
-(define (first)
-  (current-directory "/usr/src")
-  (when (file-exists? "/usr/obj")
-    (process "sudo make cleandir")
-    (process "sudo make cleandir")
-    (process "sudo rm -rfv /usr/obj"))
-  (process "sudo make buildworld")
-  (process "sudo make buildkernel")
-  (process "sudo make installkernel")
-  (print "REBOOT!"))
 
 
 
