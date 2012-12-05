@@ -21,23 +21,18 @@
 (define (process command)
   (print  (string-concatenate `("[38;5;80m" "==> " "[0m" ,command)))
   (colour-command command
-                  #/^>>>/   "[38;5;99m\\0[0m"
-                  #/^=*>/   "[38;5;39m\\0[0m"
-                  #/^-*/    "[38;5;233m\\0[0m"
-                  #/c\+\+\s/ "[38;5;44m\\0[0m"
-                  #/(cc)\s/  "[38;5;128m\\0[0m"
-                  #/\/(\w*\.cpp)/  "/[38;5;178m\\1[0m"
-                  #/\/(\w*\.c)/  "/[38;5;68m\\1[0m"
-                  #/(\w*\.o)/  "[38;5;148m\\1[0m"
-                  #/(\w*\.(S|s)o)/  "[38;5;28m\\1[0m"
-                  #/\/(\w*\.td)/  "/[38;5;48m\\1[0m"
+                  #/^>>>/   "[38;5;2m\\0[0m"
+                  #/^=*>/   "[38;5;3m\\0[0m"
+                  #/^-*/    "[38;5;4m\\0[0m"
+                  #/^(cc|c\+\+|sed|awk|ctfconvert|mkdep)\s/  "[38;5;5m\\0[0m"
+                  #/\/(\w*\.(cpp|c|o|S|so|td|po|gz|h|sh))/  "/[38;5;6m\\1[0m"
+                  #/(-\w*)/  "/[38;5;7m\\1[0m"
+                  #/(zfs|libc\+\+|clang|llvm|MYKERNEL)/  "/[38;5;8m\\1[0m"
+                  #/\(\w*\)/   "/[38;5;9m\\0[0m"
+                  #/\^*/    "/[38;5;1m\\0[0m"
+                  #/[A-Z]*/ "/[38;5;11m\\0[0m"
                   )
-  (print (string-append "[38;5;218m" "-------------" "[0m"))
-  (newline)
-  (print command)
-  (print
-    (string-concatenate
-      '("[38;5;80m" "------------" "[0m" ))))
+  (print  (string-concatenate `("[38;5;80m" "==> " "[0m finished " ,command))))
 
 (define (first)
   (current-directory "/usr/src")
@@ -67,6 +62,12 @@
     # cd /usr/src
     # make delete-old-libs "))
 
+(define (third)
+  (process "mount -u /" )
+  (process "mount -a -t ufs" )
+  (current-directory "/usr/src")
+  (process "yes y | make delete-old-libs" ))
+
 
 
 
@@ -76,4 +77,5 @@
      (first))
     ("second"
      (second))
-    ))
+    ("third"
+     (third))))
