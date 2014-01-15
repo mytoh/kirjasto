@@ -38,10 +38,10 @@
         (u8buf (make-u8vector 4096)))
     (let loop ((len (read-block! u8buf port)))
       (cond ((eof-object? len)
-             (get-output-string strport)
+             (get-output-string strport))
              (else
                (write-block u8buf strport 0 len)
-               (loop (read-block! u8buf port))))))))
+               (loop (read-block! u8buf port)))))))
 
 
 (define (split-words s)
