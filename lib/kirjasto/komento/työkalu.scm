@@ -12,7 +12,6 @@
     (gauche process)
     (file util))
 
-
   (begin
     (define-syntax run-command
       (syntax-rules ()
