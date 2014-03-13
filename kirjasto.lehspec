@@ -10,7 +10,6 @@
                    "lib/clojure/fs.scm"
                    "lib/clojure/fs/core.scm"
                    "lib/clojure/string.scm"
-                   "lib/kirjasto.scm"
                    "lib/kirjasto/arkisto.scm"
                    "lib/kirjasto/config.scm"
                    "lib/kirjasto/grafiikka.scm"
