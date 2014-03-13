@@ -1,6 +1,4 @@
-;; -*- coding: utf-8 -*-
 
-(define-module kirjasto.grafiikka
-  (extend 
-    kirjasto.grafiikka.xpm
-    ))
+(define-library (kirjasto grafiikka)
+    (export make-xpm)
+  (import (kirjasto grafiikka xpm)))
