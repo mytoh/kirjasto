@@ -1,48 +1,46 @@
-;; -*- coding: utf-8 -*-
 
-(define-module kirjasto.komento.työkalu
-  (use gauche.process)
-  (use file.util)
-  (export
-    run-command
-    run-command-null
-    run-command-sudo
-    mkdir
-    cd)
-  )
-
-(select-module kirjasto.komento.työkalu)
-
-
-(define-syntax run-command
-  ; run processes
-  (syntax-rules ()
-    ((_ c1 )
-     (run-process c1 :wait #t))
-    ((_ c1 c2 ...)
-     (begin
-       (run-process c1 :wait #t)
-       (run-command c2 ...)))))
-
-(define-syntax run-command-null;q
-  ; run processes
-  (syntax-rules ()
-    ((_ c1 )
-     (run-process c1 :wait #t :output :null))
-    ((_ c1 c2 ...)
-     (begin
-       (run-process c1 :wait #t :output :null)
-       (run-command c2 ...)))))
+(define-library (kirjasto komento työkalu)
+    (export
+      run-command
+      run-command-null
+      run-command-sudo
+      mkdir
+      cd)
+  (import
+    (scheme base)
+    (gauche base)
+    (gauche process)
+    (file util))
 
 
-(define (run-command-sudo command)
-  (run-process (append '(sudo) command) :wait #t))
+  (begin
+    (define-syntax run-command
+      (syntax-rules ()
+        ((_ c1)
+         (run-process c1 :wait #t))
+        ((_ c1 c2 ...)
+         (begin
+           (run-process c1 :wait #t)
+           (run-command c2 ...)))))
 
-(define (mkdir kansio)
-  (if (not (file-exists? kansio))
-    (make-directory* kansio)))
+    (define-syntax run-command-null
+      (syntax-rules ()
+        ((_ c1)
+         (run-process c1 :wait #t :output :null))
+        ((_ c1 c2 ...)
+         (begin
+           (run-process c1 :wait #t :output :null)
+           (run-command c2 ...)))))
 
 
-(define (cd kansio)
-  (if (file-is-directory? kansio)
-    (current-directory kansio)))
+    (define (run-command-sudo command)
+      (run-process (append '(sudo) command) :wait #t))
+
+    (define (mkdir kansio)
+      (if (not (file-exists? kansio))
+        (make-directory* kansio)))
+
+
+    (define (cd kansio)
+      (if (file-is-directory? kansio)
+        (current-directory kansio)))))

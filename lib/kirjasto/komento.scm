@@ -1,10 +1,9 @@
-(define-module kirjasto.komento
-  (use gauche.process)
-  (use file.util)
-  (extend
-    kirjasto.komento.työkalu
-    )
-)
-
-(select-module kirjasto.komento)
-
+(define-library (kirjasto komento)
+    (export
+      run-command
+      run-command-null
+      run-command-sudo
+      mkdir
+      cd)
+  (import
+    (kirjasto komento työkalu)))
