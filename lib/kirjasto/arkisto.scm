@@ -1,24 +1,24 @@
 
-(define-module kirjasto.arkisto
-  (export
-    file-is-archive?
-    )
-  (use gauche.parameter)
-  (use file.util))
-(select-module kirjasto.arkisto)
+(define-library (kirjasto arkisto)
+    (export
+      file-is-archive?     )
+  (import
+    (scheme base)
+    (gauche base)
+    (gauche parameter)
+    (file util))
+  (begin
 
+    (define supporting-extensions
+      (make-parameter
+          '("tar" "xz" "gz" "bz2"
+            "cbz" "cbr" "cbx"
+            "rar"
+            "zip")))
 
-(define supporting-extensions
-  (make-parameter
-    '("tar" "xz" "gz" "bz2"
-      "cbz" "cbr" "cbx"
-      "rar"
-      "zip")))
-
-(define (file-is-archive? file)
-  (let ((extension (path-extension file)))
-    (any
-      (lambda (s)
-        (string=? extension s))
-      (supporting-extensions))))
-
+    (define (file-is-archive? file)
+      (let ((extension (path-extension file)))
+        (any
+            (lambda (s)
+              (string=? extension s))
+          (supporting-extensions))))))
