@@ -1,7 +1,8 @@
 
 (define-library (kirjasto arkisto)
     (export
-      file-is-archive?     )
+      file-is-archive?
+      file-is-zip?)
   (import
     (scheme base)
     (gauche base)
@@ -21,4 +22,15 @@
         (any
             (lambda (s)
               (string=? extension s))
-          (supporting-extensions))))))
+          (supporting-extensions))))
+
+    (define (file-type file)
+      (let ((extension (path-extension file)))
+        (find (lambda (e) (string=? e extension))
+          (supporting-extensions))))
+
+    (define (file-is-zip? file)
+      (and (file-is-archive? file)
+        (string=? "zip" (file-type file))))
+
+    ))
