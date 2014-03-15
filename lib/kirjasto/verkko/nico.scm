@@ -1,5 +1,7 @@
-;; -*- coding: utf-8 -*-
 
-(define-module kirjasto.verkko.nico
-  (extend kirjasto.verkko.nico.mikurima)
-  )
+(define-library (kirjasto verkko nico)
+    (export
+      mik:mik->sxml
+      mik:nico-playlist->mik)
+  (import
+    (kirjasto verkko nico mikurima)))
