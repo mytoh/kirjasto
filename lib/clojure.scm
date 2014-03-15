@@ -1,8 +1,12 @@
-(define-module clojure
-  (extend
-    clojure.core
-    clojure.string
-    )
-  )
-(select-module clojure)
+(define-library (clojure)
+    (export
+      str join
 
+      if-not
+      condp
+      comment
+      slurp
+      spit)
+  (import
+    (clojure core)
+    (clojure string)))

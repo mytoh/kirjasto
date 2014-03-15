@@ -1,5 +1,3 @@
-;; -*- coding: utf-8 -*-
-
 (define-library (kirjasto väri)
     (export
       colour-string
@@ -38,8 +36,8 @@
                 (regexp-replace* in
                                  ?r1 ?s1
                                  ...
-                                        ; example:
-                                        ; #/^>>>/   "[38;5;99m\\0[0m"
-                                        ; #/^=*>/   "[38;5;39m\\0[0m"
+                                 ;; example:
+                                 ;; #/^>>>/   "[38;5;99m\\0[0m"
+                                 ;; #/^=*>/   "[38;5;39m\\0[0m"
                                  )))
              read-line))))))))
