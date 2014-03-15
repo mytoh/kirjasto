@@ -12,7 +12,7 @@
     (gauche base)
     (kirjasto verkko avata)
     (kirjasto verkko työkalu)
-    (srfi-11)
+    (srfi 11)
     (util list)
     (file util))
 
