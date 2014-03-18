@@ -19,10 +19,11 @@
 
     (define (file-is-archive? file)
       (let ((extension (path-extension file)))
-        (any
-            (lambda (s)
-              (string=? extension s))
-          (supporting-extensions))))
+        (if extension
+          (any (lambda (s)
+                 (string=? extension s))
+            (supporting-extensions))
+          #false)))
 
     (define (file-type file)
       (let ((extension (path-extension file)))
