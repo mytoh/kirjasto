@@ -22,12 +22,12 @@
                       (uri-parse url)))
           (cond
             ((string=? scheme "git")
-             #t)
+             #true)
             ((if (string? (path-extension path))
                (string=?  (path-extension path) "git")
-               #f)
-             #t)
-            (else #f)))))
+               #false)
+             #true)
+            (else #false)))))
 
 
     (define (url-is-hg? url)
@@ -45,13 +45,13 @@
         ( #/^http:\/\/svn\./ url)))
 
     (define (url-is-bzr? url)
-      (cond (( #/^bzr:\/\// url) #t)
-            (else #f)))
+      (cond (( #/^bzr:\/\// url) #true)
+            (else #false)))
 
     (define (url-is-fossil? url)
-      (cond (( #/^fossil:\/\// url) #t)
-            (else #f)))
+      (cond (( #/^fossil:\/\// url) #true)
+            (else #false)))
 
     (define (url-is-cvs? url)
-      (cond (( #/^cvs:\/\// url) #t)
-            (else #f)))))
+      (cond (( #/^cvs:\/\// url) #true)
+            (else #false)))))

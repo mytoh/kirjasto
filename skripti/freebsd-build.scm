@@ -8,18 +8,18 @@
   (syntax-rules ()
     ((_ ?command ?regexp ?string ...)
      (with-input-from-process
-       ?command
-       (lambda ()
-         (port-for-each
-           (lambda (in)
-             (print
-               (regexp-replace* in
-                                ?regexp ?string
-                                ...)))
-           read-line))))))
+      ?command
+      (lambda ()
+        (port-for-each
+         (lambda (in)
+           (print
+            (regexp-replace* in
+                             ?regexp ?string
+                             ...)))
+         read-line))))))
 
 (define (process command)
-  (print  (string-concatenate `("[38;5;80m" "==> " "[0m" ,command)))
+  (print (string-concatenate `("[38;5;80m" "==> " "[0m" ,command)))
   (colour-command command
                   #/^>>>/   "[38;5;14m\\0[0m"
                   #/^=*>/   "[38;5;3m\\0[0m"
@@ -45,7 +45,7 @@
                   )
   (print  (string-concatenate `("[38;5;80m" "==> " "[0m finished " ,command))))
 
-(define (first)
+ (define (first)
   (current-directory "/usr/src")
   (when (file-exists? "/usr/obj")
     (process "sudo make cleandir")
@@ -57,23 +57,23 @@
   (print "REBOOT!"))
 
 
-(define (second)
+ (define (second)
   (process "mount -u /" )
   (process "mount -a -t ufs" )
-  (run-process '(mergemaster -p ) :wait #t)
+  (run-process '(mergemaster -p ) :wait #true)
   (current-directory "/usr/src")
   (process "make installworld" )
   (process "yes y | make delete-old" )
-  (run-process '(mergemaster ) :wait #t)
+  (run-process '(mergemaster ) :wait #true)
   (print "please reboot")
   (print
-    " # reboot
+   " # reboot
     # mount -u /
     # mount -a -t ufs
     # cd /usr/src
     # make delete-old-libs "))
 
-(define (third)
+ (define (third)
   (process "mount -u /" )
   (process "mount -a -t ufs" )
   (current-directory "/usr/src")
@@ -82,11 +82,11 @@
 
 
 
-(define (main args)
+ (define (main args)
   (match (cadr args)
-    ("first"
-     (first))
-    ("second"
-     (second))
-    ("third"
-     (third))))
+         ("first"
+          (first))
+         ("second"
+          (second))
+         ("third"
+          (third))))

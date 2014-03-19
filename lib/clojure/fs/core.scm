@@ -23,7 +23,7 @@
 (define (temp-name prefix . suffix)
   (cond
     ((null? suffix) (temp-name prefix ""))
-    (else   (format "~a~a-~a~a" prefix (sys-time)
+    (else (format "~a~a-~a~a" prefix (sys-time)
                     (sys-random) (car suffix)))))
 
 (define (temp-create prefix suffix fproc)
@@ -40,8 +40,8 @@
 (define (temp-dir prefix . suffix)
   (cond
     ((null? suffix) (temp-dir prefix ""))
-    (else           (temp-create prefix suffix make-directory*))))
-;
+    (else (temp-create prefix suffix make-directory*))))
+                                        ;
 (define-macro (with-cwd dir . body)
   `(let ((cur (current-directory))
          (dest ,dir))
@@ -50,7 +50,7 @@
      (current-directory cur)))
 
 (define (absolute-path path)
-  (sys-normalize-pathname path :absolute #t :canonicalize #t)
+  (sys-normalize-pathname path :absolute #true :canonicalize #true)
   )
 
 (define (file path)
@@ -62,11 +62,10 @@
 
 (define (copy from to)
   "Copy a file from 'from' to 'to'. Return 'to'."
-  (copy-file (file from) (file to) :if-exists :error )
+  (copy-file (file from) (file to) :if-exists :error)
   to)
 
 (define (copy+ src dest)
   "Copy src to dest, create directories if needed."
   (make-directory* (parent dest))
   (copy src dest))
-

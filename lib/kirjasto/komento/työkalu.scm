@@ -16,29 +16,27 @@
     (define-syntax run-command
       (syntax-rules ()
         ((_ c1)
-         (run-process c1 :wait #t))
+         (run-process c1 :wait #true))
         ((_ c1 c2 ...)
          (begin
-           (run-process c1 :wait #t)
+           (run-process c1 :wait #true)
            (run-command c2 ...)))))
 
     (define-syntax run-command-null
       (syntax-rules ()
         ((_ c1)
-         (run-process c1 :wait #t :output :null))
+         (run-process c1 :wait #true :output :null))
         ((_ c1 c2 ...)
          (begin
-           (run-process c1 :wait #t :output :null)
+           (run-process c1 :wait #true :output :null)
            (run-command c2 ...)))))
 
-
     (define (run-command-sudo command)
-      (run-process (append '(sudo) command) :wait #t))
+      (run-process (append '(sudo) command) :wait #true))
 
     (define (mkdir kansio)
       (if (not (file-exists? kansio))
         (make-directory* kansio)))
-
 
     (define (cd kansio)
       (if (file-is-directory? kansio)

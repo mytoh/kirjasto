@@ -69,7 +69,7 @@
             (split-words s))
         "-"))
 
-    (define (pluralize num singular :optional (plural #f))
+    (define (pluralize num singular :optional (plural #false))
       " (plural 5 \"month\") => \"5 months\"
     (plural 9 \"radius\" \"radii\") => \"9 radii\"
   function from github.com/flatland/useful"

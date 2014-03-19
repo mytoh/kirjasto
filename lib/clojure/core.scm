@@ -28,7 +28,7 @@
            (else
                (print "file not exists"))))))
 
-    (define (spit file s :key (append? #f))
+    (define (spit file s :key (append? #false))
       (cond
         (append?
          (call-with-output-file file
@@ -54,12 +54,12 @@
          (or
              (if (pred test-expr expr)
                result-expr
-               #f)
+               #false)
            ...))))
 
     (define-syntax if-not
       (syntax-rules ()
         ((_ test then)
-         (if-not test then #f))
+         (if-not test then #false))
         ((_ test then else)
          (if (not test) then else))))))

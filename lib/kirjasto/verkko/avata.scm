@@ -15,9 +15,9 @@
   (begin
 
     (define (open uri . options)
-      (let-keywords options ((proxy  :proxy  #f)
-                             (secure :secure #f)
-                             (file   :file   #f)
+      (let-keywords options ((proxy  :proxy  #false)
+                             (secure :secure #false)
+                             (file   :file   #false)
                              . rest)
                     (let-values (((scheme user-info hostname port-number path query fragment)
                                   (uri-parse uri)))
@@ -29,7 +29,7 @@
                                                 :proxy proxy
                                                 :secure secure
                                                 :sink in
-                                                :flusher (lambda _ #t)))))
+                                                :flusher (lambda _ #true)))))
                             (else
                                 (values-ref (http-get hostname (or  path "/")
                                                       :proxy proxy
@@ -40,9 +40,9 @@
       (let-values (((scheme user-info hostname port-number path query fragment)
                     (uri-parse uri)))
         (let* ((file (receive (a fname ext)
-                              (decompose-path (dasherize path))
-                              #`",|fname|.,|ext|"))
-               (flusher (lambda (s h) (print file) #t)))
+                       (decompose-path (dasherize path))
+                       #`",|fname|.,|ext|"))
+               (flusher (lambda (s h) (print file) #true)))
           (if (not (file-is-readable? file))
             (call-with-output-file
                 file

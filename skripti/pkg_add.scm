@@ -5,7 +5,7 @@
 
 (define package-list
   (list
-    "fortune-mod-bible"
+      "fortune-mod-bible"
     "portmaster"
     "psearch"
     "portconf"
@@ -35,14 +35,14 @@
 (define (pkg-add plist)
   (let loop ((plist plist))
        (if (null? plist)
-           (begin
-             (newline)
-             (print "all packages added"))
-           (begin
-             (run-process
-               `(sudo pkg_add -r ,(car plist))
-               :wait #t)
-             (loop (cdr plist))))))
+         (begin
+           (newline)
+           (print "all packages added"))
+         (begin
+           (run-process
+            `(sudo pkg_add -r ,(car plist))
+            :wait #true)
+           (loop (cdr plist))))))
 
 (define (main args)
   (pkg-add package-list)

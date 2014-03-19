@@ -7,36 +7,32 @@
 (use kirjasto)
 
 (define (parse-img-url str)
-  (let ((url (lambda (line) 
-               (rxmatch->string 
-                 (string->regexp 
-                   (string-append "\/upimg\/[^\"]+")) 
-                 line))))
+  (let ((url (lambda (line)
+               (rxmatch->string
+                (string->regexp
+                 (string-append "\/upimg\/[^\"]+"))
+                line))))
     (remove not ;; remove #f
-             (call-with-input-string str
-                                     (lambda (in)
-                                       (port-map
-                                        (lambda (line)
-                                          (let ((match (url line)))
-                                               (if match
-                                            (string-append "http://vanilla.nu-ma.net" match)
-                                            #f)))
-                                        (cut read-line in #t)))))))
-
-
+      (call-with-input-string str
+                              (lambda (in)
+                                (port-map
+                                 (lambda (line)
+                                   (let ((match (url line)))
+                                     (if match
+                                       (string-append "http://vanilla.nu-ma.net" match)
+                                       #false)))
+                                 (cut read-line in #true)))))))
 
 (define (get-thread id)
   (receive (status head body)
-              (http-get "vanilla.nu-ma.net" (string-append "/thread.php?threadId=" (x->string id)))
-              body
-  )
- )
+    (http-get "vanilla.nu-ma.net" (string-append "/thread.php?threadId=" (x->string id)))
+    body))
 
 (define (get-images id)
-      (map
-       (lambda (u)
-         (swget u))
-       (parse-img-url (get-thread id))))
+  (map
+      (lambda (u)
+        (swget u))
+    (parse-img-url (get-thread id))))
 
 (define (main args)
   (let-args (cdr args)
@@ -45,5 +41,4 @@
             (mkdir threadid)
             (cd threadid)
             (get-images threadid)
-            (cd "..")
-))
+            (cd "..")))

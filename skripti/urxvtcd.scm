@@ -5,13 +5,11 @@
 (use util.match)
 
 (define (urxvtcd)
-  (run-process '(urxvtd -q -o -f) :wait #t)
-  (run-process '(urxvtc) :wait #t 
-                       :detached #t
-                        :error  :null
-                        :output :null)
-  )
+  (run-process '(urxvtd -q -o -f) :wait #true)
+  (run-process '(urxvtc) :wait #true
+               :detached #true
+               :error  :null
+               :output :null))
 
 (define (main args)
-  (urxvtcd)
-  )
+  (urxvtcd))
