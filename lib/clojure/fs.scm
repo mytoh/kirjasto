@@ -1,7 +1,15 @@
 
-(define-module clojure.fs
-  (extend clojure.fs.core)
-  )
-(select-module clojure.fs)
-
-
+(define-library (clojure fs)
+    (export
+      temp-name
+      temp-create
+      temp-file
+      temp-dir
+      with-cwd
+      absolute-path
+      parent
+      file
+      copy
+      copy+)
+  (import
+    (clojure fs core)))
