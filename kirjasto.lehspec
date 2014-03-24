@@ -19,6 +19,7 @@
                    "lib/kirjasto/pääte.scm"
                    "lib/kirjasto/sysutil.scm"
                    "lib/kirjasto/tiedosto.scm"
+                   "lib/kirjasto/threading.scm"
                    "lib/kirjasto/työkalu.scm"
                    "lib/kirjasto/verkko.scm"
                    "lib/kirjasto/verkko/avata.scm"
