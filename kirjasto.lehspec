@@ -42,7 +42,6 @@
                    "lib/tmux/schemeline/segments/xkb-layout.scm"
                    "lib/tmux/schemeline/status-left.scm"
                    "lib/tmux/schemeline/status-right.scm"
-                   "skripti/danbooru2.scm"
                    "skripti/editor-completion/gauche_modules"
                    "skripti/editor-completion/gen-gosh-completion.scm"
                    "skripti/editor-completion/gen_gosh_modules.scm"
