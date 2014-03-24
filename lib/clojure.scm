@@ -4,9 +4,7 @@
 
       if-not
       condp
-      comment
-      slurp
-      spit)
+      comment)
   (import
     (clojure core)
     (clojure string)))

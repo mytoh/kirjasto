@@ -13,7 +13,9 @@
       parent
       file
       copy
-      copy+)
+      copy+
+      spit
+      slurp)
   (import
     (scheme base)
     (scheme file)
@@ -25,6 +27,7 @@
     (file util)
     (util list)
     (kirjasto verkko avata)
+    (kirjasto verkko työkalu)
     )
 
   (begin
@@ -110,5 +113,28 @@
       "Copy src to dest, create directories if needed."
       (make-directory* (parent dest))
       (copy src dest))
+
+    (define-syntax slurp
+      (syntax-rules ()
+        ((_ file)
+         (cond
+           ((file-exists? file)
+            (file->string file))
+           ((string-is-url? file)
+            (open file))
+           (else
+               (print "file not exists"))))))
+
+    (define (spit file s :key (append? #false))
+      (cond
+        (append?
+         (call-with-output-file file
+           (^ (in)
+              (display s in))
+           :if-exists :append))
+        (else
+            (call-with-output-file file
+              (^ (in)
+                 (display s in))))))
 
     ))

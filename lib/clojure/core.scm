@@ -4,41 +4,16 @@
       if-not
       condp
       comment
-      slurp
-      spit)
+      )
   (import
     (scheme base)
     (scheme file)
     (gauche base)
-    (kirjasto verkko avata)
-    (kirjasto verkko työkalu)
     (srfi 11)
     (util list)
     (file util))
 
   (begin
-    (define-syntax slurp
-      (syntax-rules ()
-        ((_ file)
-         (cond
-           ((file-exists? file)
-            (file->string file))
-           ((string-is-url? file)
-            (open file))
-           (else
-               (print "file not exists"))))))
-
-    (define (spit file s :key (append? #false))
-      (cond
-        (append?
-         (call-with-output-file file
-           (^ (in)
-              (display s in))
-           :if-exists :append))
-        (else
-            (call-with-output-file file
-              (^ (in)
-                 (display s in))))))
 
     (define-syntax comment
       (syntax-rules ()
