@@ -34,8 +34,14 @@
 
     (define-syntax ->>
       (syntax-rules ()
-        ((_ x (y ...) rest ...)
-         (->> (y ... x) rest ...))
+        ((_ x (f v ...) rest ...)
+         (->> (f v ... x) rest ...))
+        ((_ x f rest ...)
+         (->> (f x) rest ...))
+        ((_ x (f v ...))
+         (->> (f v ... x)))
+        ((_ x f)
+         (f x))
         ((_ x) x)))
 
     (define-syntax ->*
