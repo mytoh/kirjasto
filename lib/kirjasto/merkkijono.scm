@@ -7,7 +7,8 @@
       split-words
       underscore
       dasherize
-      pluralize)
+      pluralize
+      conc)
   (import
     (scheme base)
     (gauche base)
@@ -78,3 +79,6 @@
                 singular
                 (or plural
                   (concat singular "s")))))))
+
+(define (conc . args)
+  (apply string-append (map x->string args)))
