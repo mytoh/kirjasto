@@ -3,8 +3,6 @@
  (name "kirjasto")
  (files (          "README.md"
                    "kirjasto.lehspec"
-                   "lib/chicken/clojurian.scm"
-                   "lib/chicken/unit/data-structures.scm"
                    "lib/clojure.scm"
                    "lib/clojure/core.scm"
                    "lib/clojure/fs.scm"
