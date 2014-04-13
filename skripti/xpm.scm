@@ -6,14 +6,12 @@
 (use srfi-13)
 (use file.util)
 
-
 (define (bin->hex number-list)
   (string-join
       (map (lambda (s)
              (format #false "0x~x" (string->number (string-reverse (number->string s)) 2)))
         number-list)
     ", "))
-
 
 (define (file->xbm ifile ofile)
   (let* ((flist (port->sexp-list (open-input-file ifile)))

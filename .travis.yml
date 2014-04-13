@@ -1,0 +1,12 @@
+language: c
+compiler:
+  - clang
+branches:
+  only:
+    - master
+before_install:
+  - sudo apt-get install -qq -y zlib1g-dev libgdbm-dev slib
+install:
+  - curl https://raw.github.com/mytoh/travis-files/master/install-gauche.sh | sh
+script:
+  sh ./test/run-travis.sh
