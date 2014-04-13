@@ -8,8 +8,6 @@
 
 (test-start "kirjasto koukku")
 
-(test-module 'kirasto.koukku) ; モジュールの一貫性チェック
-
 (test-section "test1")
 (test* "define hook"
        '()
