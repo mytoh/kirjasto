@@ -17,6 +17,7 @@
 (test* "adding-hook"
        #t
        (begin
+         (define-hook test-hook '())
          (add-hook test-hook (lambda () (+ 1 2)))
          (test-hook))
        (lambda (expected result)
