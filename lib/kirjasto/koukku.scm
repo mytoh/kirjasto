@@ -18,7 +18,7 @@
            (make-parameter (list value))))))
 
     (define (add-hook name fn)
-      (if (null? (null? (car (name))))
+      (if (null? (car (name)))
         (name (list fn))
         (name (append (name) (list fn)))))
 
