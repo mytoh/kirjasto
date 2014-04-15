@@ -4,6 +4,7 @@
       swget)
   (import
     (scheme base)
+    (scheme file)
     (gauche base)
     (gauche net)
     (rfc http)
@@ -41,7 +42,7 @@
                     (uri-parse uri)))
         (let* ((file (receive (a fname ext)
                        (decompose-path (dasherize path))
-                       #`",|fname|.,|ext|"))
+                       (string-append fname "." ext)))
                (flusher (lambda (s h) (print file) #true)))
           (if (not (file-is-readable? file))
             (call-with-output-file

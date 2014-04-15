@@ -92,6 +92,7 @@
 
 
     ;; http://www.geocities.co.jp/SiliconValley-PaloAlto/7043/index.html#continuation
+
     (define-syntax blockc
       (syntax-rules ()
         ((_ tag body1 body2 ...)
@@ -106,11 +107,6 @@
                  (let rec ()
                       body1 body2 ...
                       (rec))))))
-
-
-
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

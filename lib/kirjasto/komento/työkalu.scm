@@ -35,7 +35,7 @@
       (run-process (append '(sudo) command) :wait #true))
 
     (define (mkdir kansio)
-      (if (not (file-exists? kansio))
+      (unless (file-exists? kansio)
         (make-directory* kansio)))
 
     (define (cd kansio)
