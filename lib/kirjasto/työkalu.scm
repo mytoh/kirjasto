@@ -1,9 +1,10 @@
-(define-library (kirjasto työkalu)
+ (define-library (kirjasto työkalu)
     (export
       loop-forever
       get-os-type
       tap
       daemonize
+      check
       nothing
       blockc
       loopc
@@ -81,6 +82,9 @@
     ;; from info combinator page
     (define safe-length (every-pred list? length))
 
+    (define (check pred obj)
+      (if (pred obj)
+        obj #false))
 
     ;; http://people.csail.mit.edu/jhbrown/scheme/macroslides03.pdf
     ;; http://valvallow.blogspot.jp/2010/05/implecations.html

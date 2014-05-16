@@ -86,12 +86,21 @@
         ((null? suffix) (temp-dir prefix ""))
         (else (temp-create prefix suffix make-directory*))))
                                         ;
-    (define-macro (with-cwd dir . body)
-      `(let ((cur (current-directory))
-             (dest ,dir))
-         (current-directory dest)
-         ,@body
-         (current-directory cur)))
+    ;; (define-macro (with-cwd dir . body)
+    ;;   `(let ((cur (current-directory))
+    ;;          (dest ,dir))
+    ;;      (current-directory dest)
+    ;;      ,@body
+    ;;      (current-directory cur)))
+
+    (define-syntax with-cwd
+      (syntax-rules ()
+        ((_ dir body ...)
+         (let ((cur (current-directory))
+               (dest dir))
+           (current-directory dest)
+           body ...
+           (current-directory cur)))))
 
     (define (absolute-path path)
       (sys-normalize-pathname path :absolute #true :canonicalize #true)
@@ -101,16 +110,16 @@
       (absolute-path path))
 
     (define (parent path)
-      "Return the parent path."
+      ;; "Return the parent path."
       (sys-dirname (absolute-path path)))
 
     (define (copy from to)
-      "Copy a file from 'from' to 'to'. Return 'to'."
+      ;; "Copy a file from 'from' to 'to'. Return 'to'."
       (copy-file (file from) (file to) :if-exists :error)
       to)
 
     (define (copy+ src dest)
-      "Copy src to dest, create directories if needed."
+      ;; "Copy src to dest, create directories if needed."
       (make-directory* (parent dest))
       (copy src dest))
 

@@ -3,8 +3,7 @@
     (export
       if-not
       condp
-      comment
-      )
+      comment)
   (import
     (scheme base)
     (scheme file)
@@ -26,8 +25,7 @@
         ((_ pred expr
             (test-expr result-expr)
             ...)
-         (or
-             (if (pred test-expr expr)
+         (or (if (pred test-expr expr)
                result-expr
                #false)
            ...))))
