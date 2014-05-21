@@ -13,7 +13,10 @@
     (define (get key kv)
       (cond
         ((alist? kv)
-         (cdr (assoc key kv)))
+         (let ((v (assoc key kv)))
+           (if v
+             (cdr v)
+             #false)))
         (else #false)))
 
     (define (update key datum kv)
