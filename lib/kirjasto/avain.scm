@@ -4,7 +4,7 @@
     (export get
             update
             add
-            alist?)
+            remove)
   (import (scheme base)
           (scheme write)
           (srfi 1))
@@ -22,6 +22,25 @@
 
     (define (add key datum kv)
       (append kv (list (cons key datum))))
+
+    (define (remove key kv)
+      (if (alist? kv)
+        (if (assoc key kv)
+          (remove-alist key kv)
+          kv)
+        #false))
+
+    (define (remove-alist key  kv)
+      (let loop ((kv kv)
+                 (res '()))
+           (if (null? kv)
+             (reverse res)
+             (if (equal? key (car (car kv)))
+               (loop (cdr kv)
+                     res)
+               (loop (cdr kv)
+                     (cons (car kv)
+                       res))))))
 
     (define (update key datum kv)
       (if (alist? kv)
