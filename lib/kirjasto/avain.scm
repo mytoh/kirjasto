@@ -1,6 +1,6 @@
 ;;; kv.scm
 
-(define-library (kirjasto avain)
+ (define-library (kirjasto avain)
     (export get
             update
             add
@@ -67,26 +67,45 @@
                        res)
                  (loop (cddr kv)
                        (append res
-                         (list (car kv) (cadr kv)))))))))
+                         (list (car kv) (cadr kv)))))))
+        kvl))
 
     (define (update key datum kv)
-      (if (alist? kv)
-        (if (assoc key kv)
-          (update-alist key datum kv)
-          (add key datum kv))
-        #false))
+      (cond ((alist? kv)
+             (update-alist key datum kv))
+            ((klist? kv)
+             (update-klist key datum kv))
+            (else #false)))
 
     (define (update-alist key datum kv)
-      (let loop ((kv kv)
-                 (res '()))
-           (if (null? kv)
-             (reverse res)
-             (if (equal? key (car (car kv)))
-               (loop (cdr kv)
-                     (alist-cons key datum res))
-               (loop (cdr kv)
-                     (cons (car kv)
-                       res))))))
+      (if (assoc key kv)
+        (let loop ((kv kv)
+                   (res '()))
+             (if (null? kv)
+               (reverse res)
+               (if (equal? key (car (car kv)))
+                 (loop (cdr kv)
+                       (alist-cons key datum res))
+                 (loop (cdr kv)
+                       (cons (car kv)
+                         res)))))
+        (add key datum kv)))
+
+    (define (update-klist key datum kv)
+      (if (get-klist key kv)
+        (let loop ((kv kv)
+                   (res '()))
+             (if (null? kv)
+               res
+               (if (eq? key (car kv))
+                 (loop (cddr kv)
+                       (append
+                           (list (car kv) datum)
+                         res))
+                 (loop (cddr kv)
+                       (append res
+                         (list (car kv) (cadr kv)))))))
+        (add key datum kv)))
 
     (define (alist? x)
       (if (list? x)
