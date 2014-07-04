@@ -1,4 +1,4 @@
- (define-library (kirjasto työkalu)
+(define-library (kirjasto työkalu)
     (export
       loop-forever
       get-os-type
@@ -9,7 +9,6 @@
       blockc
       loopc
       flip
-      flatten
       eval-string
       implications)
   (import (scheme base)
@@ -21,6 +20,7 @@
           (file util)
           (rfc http)
           (rfc uri)
+          (srfi 1)
           (srfi 11)
           (srfi  13)
           (kirjasto merkkijono))
@@ -72,12 +72,6 @@
     (define (flip f)
       (lambda args (apply f (reverse args))))
 
-
-    (define (flatten lst)
-      (cond
-        ((null? lst) '())
-        ((list? lst) (append (flatten (car lst)) (flatten (cdr lst))))
-        (else (list lst))))
 
     ;; from info combinator page
     (define safe-length (every-pred list? length))
