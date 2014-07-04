@@ -13,6 +13,7 @@
                    "lib/kirjasto/hash.scm"
                    "lib/kirjasto/komento.scm"
                    "lib/kirjasto/komento/työkalu.scm"
+                   "lib/kirjasto/list.scm"
                    "lib/kirjasto/merkkijono.scm"
                    "lib/kirjasto/pääte.scm"
                    "lib/kirjasto/sysutil.scm"
