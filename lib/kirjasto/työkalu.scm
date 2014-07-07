@@ -1,4 +1,4 @@
-(define-library (kirjasto työkalu)
+ (define-library (kirjasto työkalu)
     (export
       loop-forever
       get-os-type
@@ -10,7 +10,8 @@
       loopc
       flip
       eval-string
-      implications)
+      implications
+      cond-list)
   (import (scheme base)
           (gauche base)
           (text tr)
@@ -105,6 +106,41 @@
                  (let rec ()
                       body1 body2 ...
                       (rec))))))
+
+    ;; cond-list - a syntax to construct a list
+    ;;
+    ;;   (cond-list clause clause2 ...)
+    ;;
+    ;;   clause : (test expr ...)
+    ;;          | (test => proc)
+    ;;          | (test @ expr ...) ;; splice
+    ;;          | (test => @ proc)  ;; splice
+
+    (define-syntax cond-list
+      (syntax-rules (=> @)
+        ((_) '())
+        ((_ (test) . rest)
+         (let* ((tmp test)
+                (r (cond-list . rest)))
+           (if tmp (cons tmp r) r)))
+        ((_ (test => proc) . rest)
+         (let* ((tmp test)
+                (r (cond-list . rest)))
+           (if tmp (cons (proc tmp) r) r)))
+        ((_ (test => @ proc) . rest)
+         (let* ((tmp test)
+                (r (cond-list . rest)))
+           (if tmp (append (proc tmp) r) r)))
+        ((_ (test @ . expr) . rest)
+         (let* ((tmp test)
+                (r (cond-list . rest)))
+           (if tmp (append (begin . expr) r) r)))
+        ((_ (test . expr) . rest)
+         (let* ((tmp test)
+                (r (cond-list . rest)))
+           (if tmp (cons (begin . expr) r) r)))
+        ))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
