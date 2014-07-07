@@ -141,6 +141,27 @@
            (if tmp (cons (begin . expr) r) r)))
         ))
 
+    ;; ^ == lambda
+    (define-syntax ^
+      (syntax-rules ()
+        ((_ formals . body)
+         (lambda formals . body))))
+
+    (define-syntax let1                     ;single variable bind
+      (syntax-rules ()
+        ((_ var exp . body)
+         (let ((var exp)) . body))))
+
+    (define-syntax if-let1                  ;like aif in On Lisp, but explicit var
+      (syntax-rules ()
+        ((_ var exp then . else)
+         (let ((var exp)) (if var then . else)))))
+
+    (define-syntax rlet1                    ;begin0 + let1.  name is arguable.
+      (syntax-rules ()
+        ((_ var exp body ...)
+         (let ((var exp)) body ... var))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
