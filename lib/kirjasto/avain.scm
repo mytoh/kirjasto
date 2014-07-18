@@ -1,6 +1,6 @@
 ;;; kv.scm
 
- (define-library (kirjasto avain)
+(define-library (kirjasto avain)
     (export get
             update
             add
@@ -13,6 +13,8 @@
 
     (define (get key kv)
       (cond
+        ((null? kv)
+         #false)
         ((alist? kv)
          (get-alist key kv))
         ((klist? kv)
