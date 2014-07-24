@@ -5,7 +5,7 @@
       find-all-tags)
   (import
     (scheme base)
-    (gauche base)
+    (gauche)
     (rfc uri))
 
   (begin

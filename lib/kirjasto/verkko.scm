@@ -23,7 +23,7 @@
       )
   (import
     (scheme base)
-    (gauche base)
+    (gauche)
     (kirjasto verkko nico)
     (kirjasto verkko avata)
     (kirjasto verkko keitto)

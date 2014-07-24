@@ -21,7 +21,7 @@
     (scheme file)
     (srfi 11)
     (srfi  13)
-    (gauche base)
+    (gauche)
     (gauche process)
     (gauche sequence)
     (file util)

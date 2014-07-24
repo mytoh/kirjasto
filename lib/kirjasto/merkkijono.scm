@@ -11,7 +11,7 @@
       conc)
   (import
     (scheme base)
-    (gauche base)
+    (gauche)
     (text tr)
     (text unicode)
     (gauche uvector))

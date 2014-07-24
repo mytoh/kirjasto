@@ -6,7 +6,7 @@
       robots-noindex)
   (import
     (scheme base)
-    (gauche base)
+    (gauche)
     (text tree)
     (sxml tools))
 

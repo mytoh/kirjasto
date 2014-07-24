@@ -4,7 +4,7 @@
       mik:nico-playlist->mik)
   (import
     (scheme base)
-    (gauche base)
+    (gauche)
     (srfi 11)
     (sxml ssax)
     (file util)

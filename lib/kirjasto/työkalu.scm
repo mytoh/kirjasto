@@ -1,4 +1,4 @@
- (define-library (kirjasto työkalu)
+(define-library (kirjasto työkalu)
     (export
       loop-forever
       get-os-type
@@ -13,7 +13,7 @@
       implications
       cond-list)
   (import (scheme base)
-          (gauche base)
+          (gauche)
           (text tr)
           (gauche net)
           (gauche process)

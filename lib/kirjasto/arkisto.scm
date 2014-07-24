@@ -5,7 +5,7 @@
       file-is-zip?)
   (import
     (scheme base)
-    (gauche base)
+    (gauche)
     (gauche parameter)
     (file util))
   (begin

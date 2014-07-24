@@ -8,7 +8,7 @@
       cd)
   (import
     (scheme base)
-    (gauche base)
+    (gauche)
     (gauche process)
     (file util))
 

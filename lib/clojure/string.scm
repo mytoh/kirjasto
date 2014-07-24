@@ -5,7 +5,7 @@
       )
   (import
     (scheme base)
-    (gauche base))
+    (gauche))
 
   (begin
     ;; (define (str . strings)

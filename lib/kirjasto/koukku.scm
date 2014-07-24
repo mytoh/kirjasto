@@ -7,7 +7,7 @@
             run-hooks)
   (import (scheme base)
           (scheme write)
-          (gauche base))
+          (gauche))
 
   (begin
 

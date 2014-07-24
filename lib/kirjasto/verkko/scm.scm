@@ -10,7 +10,7 @@
       url-is-fossil?)
   (import
     (scheme base)
-    (gauche base)
+    (gauche)
     (file util)
     (rfc uri)
     (srfi 11))

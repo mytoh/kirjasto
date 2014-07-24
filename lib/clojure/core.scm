@@ -7,7 +7,7 @@
   (import
     (scheme base)
     (scheme file)
-    (gauche base)
+    (gauche)
     (srfi 11)
     (util list)
     (file util))
