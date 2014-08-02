@@ -100,6 +100,24 @@
         (if (procedure? datum) kv
             (add key datum kv))))
 
+    (define (update-klist key datum kv)
+      (if (get-klist key kv)
+        (let ((proc (if (procedure? datum)
+                      datum (constant datum))))
+          (let loop ((kv kv)
+                     (res '()))
+               (if (null? kv)
+                 res
+                 (if (equal? key (car kv))
+                   (loop (cddr kv)
+                         (append res (list key (proc (cadr kv)))))
+                   (loop (cddr kv)
+                         (append
+                             res
+                           (list (car kv) (cadr kv))))))))
+        (if (procedure? datum) kv
+            (add key datum kv))))
+
     (define (alist? x)
       (if (list? x)
         (let ((e (car x)))
