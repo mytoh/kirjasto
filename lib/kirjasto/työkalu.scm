@@ -12,7 +12,8 @@
       eval-string
       implications
       cond-list
-      fcond)
+      fcond
+      constant)
   (import
     (scheme base)
     (scheme file)
@@ -197,9 +198,11 @@
            (if tmp (begin . expr) #false)))
         ((_ x (test . expr) . rest)
          (let ((tmp (test x)))
-           (if tmp (begin . expr) (fcond x . rest))))
-        ))
+           (if tmp (begin . expr) (fcond x . rest))))))
 
+
+    (define (constant x)
+      (lambda args x))
 
 
     ))
