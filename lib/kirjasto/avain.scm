@@ -47,19 +47,39 @@
           (get-klist key (cddr kv)))))
 
     (define (add key datum kv)
-      (cond ((alist? kv)
-             (append kv (list (cons key datum))))
-            ((klist? kv)
-             (append kv (list key datum)))))
+      (fcond kv
+             (alist?
+              (append kv (list (cons key datum))))
+             (plist?
+              (append kv (list (list key datum))))
+             (klist?
+              (append kv (list key datum)))))
 
     (define (remove key kv)
-      (cond ((alist? kv)
-             (remove-alist key kv))
-            ((klist? kv)
-             (remove-klist key kv))
-            (else #false)))
+      (fcond kv
+             (alist?
+              (remove-alist key kv))
+             (plist?
+              (remove-plist key kv))
+             (klist?
+              (remove-klist key kv))
+             (else #false)))
 
     (define (remove-alist key  kv)
+      (if (assoc key kv)
+        (let loop ((kv kv)
+                   (res '()))
+             (if (null? kv)
+               (reverse res)
+               (if (equal? key (car (car kv)))
+                 (loop (cdr kv)
+                       res)
+                 (loop (cdr kv)
+                       (cons (car kv)
+                         res)))))
+        kv))
+
+    (define (remove-plist key  kv)
       (if (assoc key kv)
         (let loop ((kv kv)
                    (res '()))
@@ -88,11 +108,14 @@
         kvl))
 
     (define (update key datum kv)
-      (cond ((alist? kv)
-             (update-alist key datum kv))
-            ((klist? kv)
-             (update-klist key datum kv))
-            (else #false)))
+      (fcond kv
+             (alist?
+              (update-alist key datum kv))
+             (plist?
+              (update-plist key datum kv))
+             (klist?
+              (update-klist key datum kv))
+             (else #false)))
 
     (define (update-alist key datum kv)
       (if (assoc key kv)
@@ -105,6 +128,23 @@
                  (if (equal? key (car (car kv)))
                    (loop (cdr kv)
                          (alist-cons key (proc (cdr (car kv))) res))
+                   (loop (cdr kv)
+                         (cons (car kv)
+                           res))))))
+        (if (procedure? datum) kv
+            (add key datum kv))))
+
+    (define (update-plist key datum kv)
+      (if (assoc key kv)
+        (let ((proc (if (procedure? datum)
+                      datum (constant datum))))
+          (let loop ((kv kv)
+                     (res '()))
+               (if (null? kv)
+                 (reverse res)
+                 (if (equal? key (car (car kv)))
+                   (loop (cdr kv)
+                         (cons (list key (proc (cadr (car kv)))) res))
                    (loop (cdr kv)
                          (cons (car kv)
                            res))))))
