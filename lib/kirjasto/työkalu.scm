@@ -1,4 +1,4 @@
-(define-library (kirjasto työkalu)
+ (define-library (kirjasto työkalu)
     (export
       loop-forever
       get-os-type
@@ -11,20 +11,24 @@
       flip
       eval-string
       implications
-      cond-list)
-  (import (scheme base)
-          (gauche)
-          (text tr)
-          (gauche net)
-          (gauche process)
-          (gauche sequence)
-          (file util)
-          (rfc http)
-          (rfc uri)
-          (srfi 1)
-          (srfi 11)
-          (srfi  13)
-          (kirjasto merkkijono))
+      cond-list
+      fcond)
+  (import
+    (scheme base)
+    (scheme file)
+    (gauche base)
+    (text tr)
+    (gauche net)
+    (gauche process)
+    (gauche sequence)
+    (file util)
+    (rfc http)
+    (rfc uri)
+    (srfi 1)
+    (srfi 11)
+    (srfi  13)
+    (kirjasto merkkijono)
+    (kirjasto komento))
   (begin
 
     (define-syntax loop-forever
@@ -34,7 +38,7 @@
          (let loop ()
               body
               ...
-              (sys-sleep #e3e1) ; sleep
+              (run-command '(sleep 10))
               (loop)))))
 
     (define get-os-type
@@ -75,7 +79,9 @@
 
 
     ;; from info combinator page
-    (define safe-length (every-pred list? length))
+    (define (safe-length x)
+      (and (list? x)
+        (length x)))
 
     (define (check pred obj)
       (if (pred obj)
@@ -138,8 +144,7 @@
         ((_ (test . expr) . rest)
          (let* ((tmp test)
                 (r (cond-list . rest)))
-           (if tmp (cons (begin . expr) r) r)))
-        ))
+           (if tmp (cons (begin . expr) r) r)))))
 
     ;; ^ == lambda
     (define-syntax ^
@@ -163,29 +168,38 @@
          (let ((var exp)) body ... var))))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; fcond - a syntax to one function cond
+    ;;
+    ;;   (cond-list clause clause2 ...)
+    ;;
+    ;;   clause : (test expr ...)
+    ;;          | (test)
+    ;;          | (else expr)
+    ;;
+    ;; (fcond 'a
+    ;;        (number? 'number)
+    ;;        (string? 'string)
+    ;;        (symbol? 'symbol)
+    ;;        (else #false))
 
-    ;; http://rosettacode.org/wiki/Y_combinator#Scheme
-    (define Y
-      (lambda (f)
-        ((lambda (x) (x x))
-         (lambda (g)
-           (f (lambda args (apply (g g) args)))))))
+    (define-syntax fcond
+      (syntax-rules (else)
+        ((_ x (else expr))
+         expr)
+        ((_ x (test))
+         (let ((tmp (test x)))
+           (if tmp #true #false)))
+        ((_ x (test) . rest)
+         (let ((tmp (test x)))
+           (if tmp #true (fcond x . rest))))
+        ((_ x (test . expr))
+         (let ((tmp (test x)))
+           (if tmp (begin . expr) #false)))
+        ((_ x (test . expr) . rest)
+         (let ((tmp (test x)))
+           (if tmp (begin . expr) (fcond x . rest))))
+        ))
 
-    (define fac
-      (Y
-       (lambda (f)
-         (lambda (x)
-           (if (< x 2)
-             1
-             (* x (f (- x 1))))))))
 
-    (define fib
-      (Y
-       (lambda (f)
-         (lambda (x)
-           (if (< x 2)
-             x
-             (+ (f (- x 1)) (f (- x 2))))))))
 
     ))
