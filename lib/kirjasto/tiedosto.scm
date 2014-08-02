@@ -15,17 +15,21 @@
       copy
       copy+
       spit
-      slurp)
+      slurp
+      file-directory?)
   (import
     (scheme base)
     (scheme file)
     (srfi 11)
-    (srfi  13)
-    (gauche)
+    (srfi 13)
+    (srfi 19)
+    (srfi 29)
+    (gauche base)
     (gauche process)
     (gauche sequence)
     (file util)
     (util list)
+    (kirjasto komento)
     (kirjasto verkko avata)
     (kirjasto verkko työkalu)
     )
@@ -67,8 +71,10 @@
     (define (temp-name prefix . suffix)
       (cond
         ((null? suffix) (temp-name prefix ""))
-        (else (format "~a~a-~a~a" prefix (sys-time)
-                      (sys-random) (car suffix)))))
+        (else (format "~a~a-~a~a" prefix
+                      (date-second (current-date))
+                      (date-nanosecond (current-date))
+                      (car suffix)))))
 
     (define (temp-create prefix suffix fproc)
       (let ((tmp (build-path (temporary-directory)
@@ -145,5 +151,9 @@
             (call-with-output-file file
               (^ (in)
                  (display s in))))))
+
+    (define (file-directory? file)
+      (and (file-exists? file)
+        (string=? (command-output `(stat -f%T ,file)) "/")))
 
     ))

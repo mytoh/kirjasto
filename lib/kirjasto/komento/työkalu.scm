@@ -4,13 +4,17 @@
       run-command
       run-command-null
       run-command-sudo
+      command-output
       mkdir
       cd)
   (import
     (scheme base)
-    (gauche)
+    (scheme file)
+    (gauche base)
     (gauche process)
-    (file util))
+    (file util)
+
+    (kirjasto tiedosto))
 
   (begin
     (define-syntax run-command
@@ -34,10 +38,13 @@
     (define (run-command-sudo command)
       (run-process (append '(sudo) command) :wait #true))
 
+    (define (command-output command)
+      (process-output->string command))
+
     (define (mkdir kansio)
       (unless (file-exists? kansio)
         (make-directory* kansio)))
 
     (define (cd kansio)
-      (if (file-is-directory? kansio)
+      (if (file-directory? kansio)
         (current-directory kansio)))))

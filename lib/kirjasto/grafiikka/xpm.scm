@@ -5,7 +5,7 @@
       make-xpm)
   (import
     (scheme base)
-    (gauche)
+    (gauche base)
     (file util))
 
   (begin

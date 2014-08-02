@@ -4,7 +4,7 @@
       colour-command)
   (import
     (scheme base)
-    (gauche)
+    (gauche base)
     (gauche process)
     (srfi 13))
 

@@ -5,7 +5,7 @@
       string-is-url?)
   (import
     (scheme base)
-    (gauche)
+    (gauche base)
     (sxml ssax))
 
   (begin

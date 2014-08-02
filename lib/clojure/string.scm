@@ -5,7 +5,8 @@
       )
   (import
     (scheme base)
-    (gauche))
+    (srfi 1)
+    (gauche base))
 
   (begin
     ;; (define (str . strings)

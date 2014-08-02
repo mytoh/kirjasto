@@ -11,7 +11,7 @@
       conc)
   (import
     (scheme base)
-    (gauche)
+    (gauche base)
     (text tr)
     (text unicode)
     (gauche uvector))
@@ -70,15 +70,17 @@
             (split-words s))
         "-"))
 
-    (define (pluralize num singular :optional (plural #false))
+    (define (pluralize num singular . optionals)
       " (plural 5 \"month\") => \"5 months\"
     (plural 9 \"radius\" \"radii\") => \"9 radii\"
   function from github.com/flatland/useful"
-      (concat num " "
-              (if (= 1 num)
-                singular
-                (or plural
-                  (concat singular "s")))))))
+      (let ((plural? (if (null? optionals) #false #true)))
+        (concat num " "
+                (if (= 1 num)
+                  singular
+                  (or plural?
+                    (concat singular "s"))))))
+    (define (conc . args)
+      (apply string-append (map x->string args)))
 
-(define (conc . args)
-  (apply string-append (map x->string args)))
+    ))

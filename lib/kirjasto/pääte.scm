@@ -12,7 +12,7 @@
       tput-clr-eol)
   (import
     (scheme base)
-    (gauche)
+    (gauche base)
     (file util)
     (gauche process)
     (gauche parseopt)
