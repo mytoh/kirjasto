@@ -23,12 +23,20 @@
               (get-alist key kv))
              (klist?
               (get-klist key kv))
+             (plist?
+              (get-plist key kv))
              (else #false)))
 
     (define (get-alist key kv)
       (let ((v (assoc key kv)))
         (if v
           (cdr v)
+          #false)))
+
+    (define (get-plist key kv)
+      (let ((v (assoc key kv)))
+        (if v
+          (cadr v)
           #false)))
 
     (define (get-klist key kv)
@@ -121,6 +129,8 @@
         (if (procedure? datum) kv
             (add key datum kv))))
 
+    ;; alist
+    ;; ((a . 1) (b . 2) (c . 3))
     (define (alist? x)
       (if (list? x)
         (let ((e (car x)))
@@ -128,8 +138,17 @@
             (not (list? e))))
         #false))
 
+    ;; klist
+    ;; (a  1 b  2 c  3)
     (define (klist? x)
       (and (list? x)
+        (not-pair? (car x))
         (even? (length x))))
+
+    ;; plist
+    ;; ((a 1) (b 2) (c 3))
+    (define (plist? x)
+      (and (list? x)
+        (list? (car x))))
 
     ))
