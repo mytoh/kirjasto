@@ -39,7 +39,10 @@
           (get-klist key (cddr kv)))))
 
     (define (add key datum kv)
-      (append kv (list (cons key datum))))
+      (cond ((alist? kv)
+             (append kv (list (cons key datum))))
+            ((klist? kv)
+             (append kv (list key datum)))))
 
     (define (remove key kv)
       (cond ((alist? kv)
