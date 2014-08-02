@@ -1,25 +1,29 @@
 ;;; kv.scm
 
-(define-library (kirjasto avain)
+ (define-library (kirjasto avain)
     (export get
             update
             add
             remove)
-  (import (scheme base)
-          (scheme write)
-          (srfi 1))
+  (import
+    (scheme base)
+    (scheme write)
+
+    (srfi 1)
+
+    (kirjasto työkalu))
 
   (begin
 
     (define (get key kv)
-      (cond
-        ((null? kv)
-         #false)
-        ((alist? kv)
-         (get-alist key kv))
-        ((klist? kv)
-         (get-klist key kv))
-        (else #false)))
+      (fcond kv
+             (null?
+                 #false)
+             (alist?
+              (get-alist key kv))
+             (klist?
+              (get-klist key kv))
+             (else #false)))
 
     (define (get-alist key kv)
       (let ((v (assoc key kv)))
