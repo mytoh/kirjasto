@@ -1,5 +1,5 @@
 
-(define-library (kirjasto merkkijono)
+ (define-library (kirjasto merkkijono)
     (export
       print-strings
       concat
@@ -8,9 +8,11 @@
       underscore
       dasherize
       pluralize
-      conc)
+      conc
+      println)
   (import
     (scheme base)
+    (scheme write)
     (gauche base)
     (text tr)
     (text unicode)
@@ -24,8 +26,12 @@
           ((null? string-lst)
            (values))
           (else
-              (print (car  string-lst))
+              (println (car  string-lst))
             (print-strings (cdr string-lst))))))
+
+    (define (println . strings)
+      (for-each display strings)
+      (newline))
 
     (define-syntax concat
       (syntax-rules ()
@@ -80,6 +86,7 @@
                   singular
                   (or plural?
                     (concat singular "s"))))))
+
     (define (conc . args)
       (apply string-append (map x->string args)))
 
