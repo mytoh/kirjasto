@@ -13,7 +13,16 @@
       implications
       cond-list
       fcond
-      constant)
+      constant
+      compose
+      partial
+      ^
+      let1
+      if-let1
+      rlet1
+      keep
+      because
+      )
   (import
     (scheme base)
     (scheme file)
@@ -153,17 +162,20 @@
         ((_ formals . body)
          (lambda formals . body))))
 
-    (define-syntax let1                     ;single variable bind
+    (define-syntax let1
+      ;; single variable bind
       (syntax-rules ()
         ((_ var exp . body)
          (let ((var exp)) . body))))
 
-    (define-syntax if-let1                  ;like aif in On Lisp, but explicit var
+    (define-syntax if-let1
+      ;; like aif in On Lisp, but explicit var
       (syntax-rules ()
         ((_ var exp then . else)
          (let ((var exp)) (if var then . else)))))
 
-    (define-syntax rlet1                    ;begin0 + let1.  name is arguable.
+    (define-syntax rlet1
+      ;; begin0 + let1.  name is arguable.
       (syntax-rules ()
         ((_ var exp body ...)
          (let ((var exp)) body ... var))))
@@ -171,7 +183,7 @@
 
     ;; fcond - a syntax to one function cond
     ;;
-    ;;   (cond-list clause clause2 ...)
+    ;;   (fcond value clause clause2 ...)
     ;;
     ;;   clause : (test expr ...)
     ;;          | (test)
@@ -201,8 +213,39 @@
            (if tmp (begin . expr) (fcond x . rest))))))
 
 
-    (define (constant x)
-      (lambda args x))
+    ;; combinator from gauche's lib/gauche/procedure.scm
+    (define (compose . fns)
+      (cond ((null? fns) values)
+            ((null? (cdr fns)) (car fns))
+            ((null? (cddr fns))
+             (lambda args (call-with-values (lambda ignore (apply (cadr fns) args)) (car fns))))
+            (else (compose (car fns) (apply compose (cdr fns))))))
 
+    (define (partial fn . args)                  ;partial apply
+      (^ more-args (apply fn (append args more-args))))
+
+    (define (constant x)
+      (^ args x))
+
+    (define (keep f lst)
+      (remove not
+        (map f lst)))
+
+    (define-syntax because
+      (syntax-rules ()
+        ((_ ((v e) (v2 e2) . rest) body ...)
+         (let ((v e))
+           (and v
+             (because ((v2 e2) . rest) body ...))))
+        ((_ ((v e)) body ...)
+         (let ((v e))
+           (and v
+             (begin
+               body ...))))
+        ((_ (v e) body ...)
+         (let ((v e))
+           (and v
+             (begin
+               body ...))))))
 
     ))
