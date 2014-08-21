@@ -7,7 +7,7 @@
             run-hooks)
   (import (scheme base)
           (scheme write)
-          (gauche base))
+          (srfi 1))
 
   (begin
 
