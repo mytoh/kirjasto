@@ -2,7 +2,8 @@
 
 (define-library (kirjasto list)
     (export
-      flatten)
+      flatten
+      snoc)
   (import (scheme base)
           (scheme write)
           (srfi 1))
@@ -17,5 +18,8 @@
          (append-map flatten xs))
         (else
             (list xs))))
+
+    (define (snoc x lst)
+      (append lst (list x)))
 
     ))
