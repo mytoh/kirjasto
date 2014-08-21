@@ -1,6 +1,6 @@
  (define-library (kirjasto työkalu)
     (export
-      loop-forever
+      forever
       get-os-type
       tap
       daemonize
@@ -41,14 +41,13 @@
     (kirjasto komento))
   (begin
 
-    (define-syntax loop-forever
+    (define-syntax forever
       ;;macro for endless loop
       (syntax-rules ()
         ((_ body ...)
          (let loop ()
               body
               ...
-              (run-command '(sleep 10))
               (loop)))))
 
     (define get-os-type
@@ -228,7 +227,7 @@
       (^ args x))
 
     (define (keep f lst)
-      (remove not
+      (remove null?
         (map f lst)))
 
     (define-syntax because
