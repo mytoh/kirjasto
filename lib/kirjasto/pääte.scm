@@ -1,5 +1,5 @@
 
-(define-library (kirjasto pääte)
+ (define-library (kirjasto pääte)
     (export
       screen-title
       print-repeat
@@ -38,19 +38,19 @@
         string-list))
 
     (define (tput-cr)
-      (run-process '(tput cr) :wait #true))
+      (run-process '(tput cr) ':wait #true))
 
     (define (tput-cursor-invisible)
-      (run-process '(tput civis) :wait #true))
+      (run-process '(tput civis) ':wait #true))
 
     (define (tput-cursor-normal)
-      (run-process '(tput cnorm) :wait #true))
+      (run-process '(tput cnorm) ':wait #true))
 
     (define (tput-clr-bol)
-      (run-process '(tput el1) :wait #true))
+      (run-process '(tput el1) ':wait #true))
 
     (define (tput-clr-eol)
-      (run-process '(tput el) :wait #true))
+      (run-process '(tput el) ':wait #true))
 
     (define (string-longest string-list)
       (fold (lambda (s r)

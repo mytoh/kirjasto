@@ -41,7 +41,7 @@
     (define open
       (case-lambda
        ((open uri)
-        (open #false #false #false))
+        (open uri #false #false #false))
        ((open uri proxy)
         (open uri proxy #false #false))
        ((open uri proxy secure)
@@ -54,14 +54,14 @@
                           file
                         (lambda (in)
                           (http-get hostname (or  path "/")
-                                    :proxy proxy
-                                    :secure secure
-                                    :sink in
-                                    :flusher (lambda _ #true)))))
+                                    ':proxy proxy
+                                    ':secure secure
+                                    ':sink in
+                                    ':flusher (lambda _ #true)))))
                 (else
                     (values-ref (http-get hostname (or  path "/")
-                                          :proxy proxy
-                                          :secure secure)
+                                          ':proxy proxy
+                                          ':secure secure)
                                 2)))))))
 
     (define (swget uri)
@@ -75,6 +75,6 @@
             (call-with-output-file
                 file
               (cut http-get hostname path
-                   :sink <> :flusher flusher))))))
+                   ':sink <> ':flusher flusher))))))
 
     ))

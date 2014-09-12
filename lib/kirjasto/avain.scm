@@ -1,6 +1,6 @@
 ;;; kv.scm
 
- (define-library (kirjasto avain)
+(define-library (kirjasto avain)
     (export get
             update
             add
@@ -125,12 +125,15 @@
                      (res '()))
                (if (null? kv)
                  (reverse res)
-                 (if (equal? key (car (car kv)))
-                   (loop (cdr kv)
-                         (alist-cons key (proc (cdr (car kv))) res))
-                   (loop (cdr kv)
-                         (cons (car kv)
-                           res))))))
+                 (let ((elem (car kv)))
+                   (if (null? elem)
+                     (loop (cdr kv)
+                           (cons elem res))
+                     (if (equal? key (car elem))
+                       (loop (cdr kv)
+                             (alist-cons key (proc (cdr elem)) res))
+                       (loop (cdr kv)
+                             (cons elem  res))))))))
         (if (procedure? datum) kv
             (add key datum kv))))
 
@@ -142,12 +145,15 @@
                      (res '()))
                (if (null? kv)
                  (reverse res)
-                 (if (equal? key (car (car kv)))
-                   (loop (cdr kv)
-                         (cons (list key (proc (cadr (car kv)))) res))
-                   (loop (cdr kv)
-                         (cons (car kv)
-                           res))))))
+                 (let ((elem (car kv)))
+                   (if (null? elem)
+                     (loop (cdr kv)
+                           (cons elem res))
+                     (if (equal? key (car elem))
+                       (loop (cdr kv)
+                             (cons (list key (proc (cadr elem))) res))
+                       (loop (cdr kv)
+                             (cons elem res))))))))
         (if (procedure? datum) kv
             (add key datum kv))))
 

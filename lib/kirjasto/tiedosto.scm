@@ -1,5 +1,5 @@
 
-(define-library (kirjasto tiedosto)
+ (define-library (kirjasto tiedosto)
     (export
       path-add-extension
       cat-file
@@ -20,6 +20,7 @@
   (import
     (scheme base)
     (scheme file)
+    (scheme write)
     (srfi 11)
     (srfi 13)
     (srfi 19)
@@ -109,7 +110,7 @@
            (current-directory cur)))))
 
     (define (absolute-path path)
-      (sys-normalize-pathname path :absolute #true :canonicalize #true)
+      (sys-normalize-pathname path ':absolute #true ':canonicalize #true)
       )
 
     (define (file path)
@@ -121,7 +122,7 @@
 
     (define (copy from to)
       ;; "Copy a file from 'from' to 'to'. Return 'to'."
-      (copy-file (file from) (file to) :if-exists :error)
+      (copy-file (file from) (file to) ':if-exists ':error)
       to)
 
     (define (copy+ src dest)
@@ -146,7 +147,7 @@
          (call-with-output-file file
            (^ (in)
               (display s in))
-           :if-exists :append))
+           ':if-exists ':append))
         (else
             (call-with-output-file file
               (^ (in)
@@ -154,6 +155,6 @@
 
     (define (file-directory? file)
       (and (file-exists? file)
-        (string=? (command-output `(stat -f%T ,file)) "/")))
+        (file-is-directory? file)))
 
     ))

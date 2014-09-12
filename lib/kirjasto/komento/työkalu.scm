@@ -20,23 +20,23 @@
     (define-syntax run-command
       (syntax-rules ()
         ((_ c1)
-         (run-process c1 :wait #true))
+         (run-process c1 ':wait #true))
         ((_ c1 c2 ...)
          (begin
-           (run-process c1 :wait #true)
+           (run-process c1 ':wait #true)
            (run-command c2 ...)))))
 
     (define-syntax run-command-null
       (syntax-rules ()
         ((_ c1)
-         (run-process c1 :wait #true :output :null))
+         (run-process c1 ':wait #true ':output ':null))
         ((_ c1 c2 ...)
          (begin
-           (run-process c1 :wait #true :output :null)
+           (run-process c1 ':wait #true ':output ':null)
            (run-command c2 ...)))))
 
     (define (run-command-sudo command)
-      (run-process (append '(sudo) command) :wait #true))
+      (run-process (append '(sudo) command) ':wait #true))
 
     (define (command-output command)
       (process-output->string command))

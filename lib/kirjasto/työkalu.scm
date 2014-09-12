@@ -22,6 +22,7 @@
       rlet1
       keep
       because
+      let/ec
       )
   (import
     (scheme base)
@@ -246,5 +247,21 @@
            (and v
              (begin
                body ...))))))
+
+    ;; http://schemecookbook.org/Cookbook/IdiomPrematureReturn
+    ;; Simple example of an port from an imperative langauge
+    ;; (define (foo)
+    ;;   (let/ec return
+    ;;     (display 'bar)
+    ;;     (return 42)
+    ;;     (display 'qux)))  ; qux is never displayed
+
+    ;; > (foo)
+    ;; bar
+    ;; 42
+    (define-syntax let/ec
+      (syntax-rules ()
+        [(_ name body ...)
+         (call-with-current-continuation (lambda (name) body ...))]))
 
     ))
