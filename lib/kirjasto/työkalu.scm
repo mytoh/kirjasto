@@ -23,6 +23,10 @@
       keep
       because
       let/ec
+      some?
+      if-some1
+      true?
+      false?
       )
   (import
     (scheme base)
@@ -248,6 +252,23 @@
              (begin
                body ...))))))
 
+    (define (some? x)
+      (not (null? x)))
+
+    (define-syntax if-some
+      (syntax-rules ()
+        ((_ (var exp) then)
+         (if-some1 var exp then '()))
+        ((_ (var exp) then . else)
+         (let ((var  exp))
+           (if (some? var) then . else)))))
+
+    (define (true? x)
+      (if (eq? #true x) #true #false))
+
+    (define (false? x)
+      (if (eq? #false x) #true #false))
+
     ;; http://schemecookbook.org/Cookbook/IdiomPrematureReturn
     ;; Simple example of an port from an imperative langauge
     ;; (define (foo)
@@ -255,7 +276,6 @@
     ;;     (display 'bar)
     ;;     (return 42)
     ;;     (display 'qux)))  ; qux is never displayed
-
     ;; > (foo)
     ;; bar
     ;; 42
