@@ -24,7 +24,7 @@
       because
       let/ec
       some?
-      if-some1
+      if-some
       true?
       false?
       )
